@@ -1,12 +1,21 @@
 import axios from 'axios';
 
+const rawBaseUrl =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === 'production'
+    ? 'https://secretsync-backend.onrender.com'
+    : 'http://localhost:5000');
+
+const baseURL = (rawBaseUrl || '').trim().replace(/\/+$/, '');
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000',
+  baseURL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
   }
 });
+
 
 // Axios request interceptor to attach Bearer token if present
 api.interceptors.request.use((config) => {
