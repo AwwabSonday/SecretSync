@@ -8,6 +8,17 @@ const api = axios.create({
   }
 });
 
+// Axios request interceptor to attach Bearer token if present
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
 // Axios response interceptor for session expiration / 401 Unauthorized
 api.interceptors.response.use(
   (response) => response,

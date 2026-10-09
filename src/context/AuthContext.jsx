@@ -14,6 +14,9 @@ export const AuthProvider = ({ children }) => {
       const response = await api.get('/api/auth/me');
       setUser(response.data.user);
     } catch (error) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
       setUser(null);
     } finally {
       setLoading(false);
@@ -26,6 +29,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const response = await api.post('/api/auth/login', { email, password });
+    if (response.data.token && typeof window !== 'undefined') {
+      localStorage.setItem('token', response.data.token);
+    }
     setUser(response.data.user);
     return response.data.user;
   };
@@ -36,6 +42,9 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
       setUser(null);
       if (typeof window !== 'undefined') {
         window.location.href = '/login';
