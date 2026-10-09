@@ -9,6 +9,7 @@ export default {
     extend: {
       animation: {
         spin: 'spin 1.8s linear infinite',
+        pulse: 'pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       colors: {
         ink: '#222831',

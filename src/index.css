@@ -60,3 +60,18 @@
 .animate-spin {
   animation: spin 1.8s linear infinite !important;
 }
+
+/* Calmer, smoother pulse animation for skeleton loading */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
